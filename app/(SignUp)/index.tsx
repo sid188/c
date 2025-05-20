@@ -1,17 +1,18 @@
-
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
-export default function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Signup: React.FC = () => {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const router = useRouter();
 
-  const handleSignUp = () => {
+  const handleSignUp = (): void => {
     if (!username || !password) {
       Alert.alert('Error', 'Please enter both username and password.');
       return;
     }
-    Alert.alert('Success', `Signed up with username: ${username}`);
+    router.replace('/(tab)');
   };
 
   return (
@@ -22,6 +23,10 @@ export default function App() {
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
+        autoCapitalize="none"
+        autoCorrect={false}
+        keyboardType="default"
+        textContentType="username"
       />
       <TextInput
         style={styles.input}
@@ -29,11 +34,16 @@ export default function App() {
         secureTextEntry
         value={password}
         onChangeText={setPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
+        textContentType="password"
       />
       <Button title="Sign Up" onPress={handleSignUp} />
     </View>
   );
-}
+};
+
+export default Signup;
 
 const styles = StyleSheet.create({
   container: {
